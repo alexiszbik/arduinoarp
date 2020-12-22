@@ -46,10 +46,10 @@ int noteToVolt(int noteIn) {
 
 void loop(void) {
     
-    int newClockState = analogRead(6) > 80;
+    int newClockState = analogRead(0) > 200;
 
     int startPot = analogRead(1);
-    int rangePot = analogRead(0);
+    int rangePot = analogRead(6);
 
     int noteRange = (int)fmin(round(rangePot/21.), (double)MAX_NOTE);
     int minRange = (int)fmin(round(startPot/21.), (double)MAX_NOTE);
@@ -58,9 +58,12 @@ void loop(void) {
     bool modeSwitchUp = analogRead(2) > 500;
     bool modeSwitchDown = analogRead(3) > 500;
 
+    //Serial.println(analogRead(0));
+
     enum eMode mode;
     if (modeSwitchUp && modeSwitchDown) {
         mode = upAndDown;
+        
     } else if (modeSwitchUp && !modeSwitchDown) {
         mode = up;
     } else if (!modeSwitchUp && modeSwitchDown) {
